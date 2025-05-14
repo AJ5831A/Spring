@@ -26,10 +26,10 @@ import org.springframework.stereotype.Service;
          user.setUserRole(UserRole.CUSTOMER);
          User userCreated = userRepository.save(user);
          UserDto createdUserDto = new UserDto();
-         createdUserDto.setId(createdUserDto.getId());
-         createdUserDto.setName(createdUserDto.getName());
-         createdUserDto.setEmail(createdUserDto.getEmail());
-         createdUserDto.setUserRole(createdUserDto.getUserRole());
-        return null;
+         createdUserDto.setId(userCreated.getId());
+         createdUserDto.setName(userCreated.getName());
+         createdUserDto.setEmail(userCreated.getEmail());
+         createdUserDto.setUserRole(userCreated.getUserRole());
+        return createdUserDto;
     }
 }
