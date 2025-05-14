@@ -1,7 +1,9 @@
 package in.org.bricks.student_app.controllers;
 
 import in.org.bricks.student_app.dtos.SignupRequest;
+import in.org.bricks.student_app.dtos.UserDto;
 import in.org.bricks.student_app.services.auth.AuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,11 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest){
-        authService.createUser(signupRequest);
+        UserDto createdUserDto = authService.createUser(signupRequest);
+        if(createdUserDto == null){
+            return new ResponseEntity<>("User not created. Call your Organisation!" , HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(createdUserDto , HttpStatus.CREATED);
     }
 
 }

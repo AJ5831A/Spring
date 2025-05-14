@@ -12,11 +12,9 @@ import org.springframework.stereotype.Service;
  public class AuthServiceImplementation implements AuthService{
 
     private  final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AuthServiceImplementation(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -24,7 +22,7 @@ import org.springframework.stereotype.Service;
         User user = new User();
          user.setName(signupRequest.getName());
          user.setEmail(signupRequest.getEmail());
-         user.setPassword(bCryptPasswordEncoder.encode(signupRequest.getPassword()));
+         user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
          user.setUserRole(UserRole.CUSTOMER);
          User userCreated = userRepository.save(user);
          UserDto createdUserDto = new UserDto();
